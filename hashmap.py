@@ -5,7 +5,7 @@ Created on Wed Mar 08 17:25:15 2017
 @author: thor
 """
 
-# implementation of hash map
+# implementation of hash map using array
 
 from arrayRe import Array
 
