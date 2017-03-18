@@ -79,23 +79,6 @@ def shellSort(lists):
 		group //= step
 	return lists
 	
-def shellSortModi(lists):
-	count=len(lists)
-	step=2
-	group=count//step
-	while group>0:
-		for i in range(0,group):
-			j=i+group
-			while j<count:
-				k=j-group
-				while k>0:
-					if lists[k]>lists[j]:
-						lists[j],lists[k]=lists[k],lists[j]
-					k-=group
-				j+=group
-		group//=step
-	return lists
-	
 # quick sort, when runniing falls into a infinite recursion
 # remains a question, should refer to algo and struct in C
 def quickSort(array,low,high):
