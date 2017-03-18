@@ -63,7 +63,7 @@ def insertionSort(theSeq):
 def shellSort(lists):
 	count=len(lists)
 	step=2
-	group=count/step
+	group=count//step
 	while group>0:
 		for i in range(0,group):
 			j=i+group
@@ -76,7 +76,24 @@ def shellSort(lists):
 						lists[k]=key
 					k-=group
 				j+=group
-		group /= step
+		group //= step
+	return lists
+	
+def shellSortModi(lists):
+	count=len(lists)
+	step=2
+	group=count//step
+	while group>0:
+		for i in range(0,group):
+			j=i+group
+			while j<count:
+				k=j-group
+				while k>0:
+					if lists[k]>lists[j]:
+						lists[j],lists[k]=lists[k],lists[j]
+					k-=group
+				j+=group
+		group//=step
 	return lists
 	
 # quick sort, when runniing falls into a infinite recursion
@@ -101,6 +118,7 @@ def partion(array,low,high):
 	array[low]=key
 	return low
 	
+
 
 ar=[2,5,7,3,4,1,8]
 quickSort(ar,0,len(ar)-1)
