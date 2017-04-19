@@ -63,7 +63,7 @@ def insertionSort(theSeq):
 def shellSort(lists):
 	count=len(lists)
 	step=2
-	group=count/step
+	group=count//step
 	while group>0:
 		for i in range(0,group):
 			j=i+group
@@ -76,35 +76,92 @@ def shellSort(lists):
 						lists[k]=key
 					k-=group
 				j+=group
-		group /= step
+		group //= step
 	return lists
-	
-# quick sort, when runniing falls into a infinite recursion
-# remains a question, should refer to algo and struct in C
-def quickSort(array,low,high):
-	if low<high:
-		keyIndex=partion(array,low,high)
-		quickSort(array,low,keyIndex)
-		quickSort(array,keyIndex,high)
-	
-def partion(array,low,high):
-	key=array[low]
-	while low<high:
-		while low<high and array[high]>=key:
-			high-=1
-		if low<high:
-			array[low]=array[high]
-		while low<high and array[low]<key:
-			low+=1
-		if low<high:
-			array[high]=array[low]
-	array[low]=key
-	return low
-	
 
-ar=[2,5,7,3,4,1,8]
-quickSort(ar,0,len(ar)-1)
-	
+
+# implementation of merge sort
+# note that strange value error happens in merge sort
+def mergeSort(theSeq):
+    n=len(theSeq)
+    tmpArray=[0 for i in range(n)]
+    recMergeSort(theSeq,0,n-1,tmpArray)
+
+def recMergeSort(theSeq,first,last,tmpArray):
+    if first==last:
+        return
+    else:
+        mid=(first+last)//2
+        recMergeSort(theSeq,first,mid,tmpArray)
+        recMergeSort(theSeq,mid+1,last,tmpArray)
+        mergeVirtualSeq(theSeq,first,mid+1,last+1,tmpArray)
+        
+def mergeVirtualSeq(theSeq,left,right,end,tmpArray):
+    a=left
+    b=right
+    m=0
+    while a<right and b<end:
+        if theSeq[a]<theSeq[b]:
+            tmpArray[m]=theSeq[b]
+            a+=1
+        else:
+            tmpArray[m]=theSeq[b]
+            b+=1
+        m+=1
+        
+    while a<right:
+        tmpArray[m]=theSeq[a]
+        a+=1
+        m+=1
+        
+    while b<end:
+        tmpArray[m]=theSeq[b]
+        b+=1
+        m+=1
+    
+    for i in range(end-left):
+        theSeq[i+left]=tmpArray[i]
+        
+# implementation of quick sort
+# report index error in several cases
+def quickSort(theSeq):
+    n=len(theSeq)
+    recQuickSort(theSeq,0,n-1)
+    
+def recQuickSort(theSeq,first,last):
+    if first==last:
+        return
+    else:
+#        pivot=theSeq[first]
+#        print('rec:',first,last)
+        pos=partitionSeq(theSeq,first,last)
+#        print('rec pos:',pos)
+        recQuickSort(theSeq,first,pos-1)
+        recQuickSort(theSeq,pos+1,last)
+        
+def partitionSeq(theSeq,first,last):
+    pivot=theSeq[first]
+    left=first+1
+    right=last
+    while left<=right:
+        while left<right and theSeq[left]<pivot:
+            left+=1
+        while right>=left and theSeq[right]>=pivot:
+            right-=1
+        if left<right:
+            tmp=theSeq[left]
+            theSeq[left]=theSeq[right]
+            theSeq[right]=tmp
+    if right!=first:
+#        print('partition:',first,right)
+#        print('value:',theSeq[first],theSeq[right])
+        theSeq[first]=theSeq[right]
+        theSeq[right]=pivot
+    print(right)
+    return right
+
+
+
 
 
 
